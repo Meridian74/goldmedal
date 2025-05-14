@@ -126,7 +126,6 @@ public class GoldMedalController {
     private List<CountrySummary> getCountrySummaries(String sortBy, boolean ascendingOrder) {
         List<Country> countries;
         switch (sortBy) {
-            // TODO: list of countries sorted by name in the given order
             case "name":
                 countries = ascendingOrder ?
                         this.countryRepository.getAllByOrderByNameAsc() :
@@ -168,7 +167,7 @@ public class GoldMedalController {
     private List<CountrySummary> getCountrySummariesWithMedalCount(List<Country> countries) {
         List<CountrySummary> countrySummaries = new ArrayList<>();
         for (var country : countries) {
-            var goldMedalCount = // TODO: get count of medals for the given country
+            var goldMedalCount = goldMedalRepository.countByCountry(country.getName());
             countrySummaries.add(new CountrySummary(country, goldMedalCount));
         }
         return countrySummaries;
