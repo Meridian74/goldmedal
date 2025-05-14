@@ -90,19 +90,23 @@ public class GoldMedalController {
 
         var summerWins = this.goldMedalRepository.getBySeasonOrderByYearAsc("Summer");
 
-        var numberSummerWins = summerWins.size() > 0 ? summerWins.size() : null;
+        var numberSummerWins = !summerWins.isEmpty() ? summerWins.size() : null;
         var totalSummerEvents = this.goldMedalRepository.countBySeason("Summer");
-        var percentageTotalSummerWins = totalSummerEvents != 0 && numberSummerWins != null ? (float) summerWins.size() / totalSummerEvents : null;
-        var yearFirstSummerWin = summerWins.size() > 0 ? summerWins.get(0).getYear() : null;
+        var percentageTotalSummerWins = totalSummerEvents != 0 && numberSummerWins != null ?
+                (float) summerWins.size() / totalSummerEvents :
+                null;
+        var yearFirstSummerWin = !summerWins.isEmpty() ? summerWins.get(0).getYear() : null;
 
         var winterWins = this.goldMedalRepository.getBySeasonOrderByYearAsc("Winter");
-        var numberWinterWins = winterWins.size() > 0 ? winterWins.size() : null;
-        var totalWinterEvents = // TODO: get the total number of events at the Winter Olympics, sorted by year in ascending order
-        var percentageTotalWinterWins = totalWinterEvents != 0 && numberWinterWins != null ? (float) winterWins.size() / totalWinterEvents : null;
-        var yearFirstWinterWin = winterWins.size() > 0 ? winterWins.get(0).getYear() : null;
+        var numberWinterWins = !winterWins.isEmpty() ? winterWins.size() : null;
+        var totalWinterEvents = this.goldMedalRepository.countBySeason("Winter");
+        var percentageTotalWinterWins = totalWinterEvents != 0 && numberWinterWins != null ?
+                (float) winterWins.size() / totalWinterEvents :
+                null;
+        var yearFirstWinterWin = !winterWins.isEmpty() ? winterWins.get(0).getYear() : null;
 
-        var numberEventsWonByFemaleAthletes = // TODO: get the number of wins by female athletes
-        var numberEventsWonByMaleAthletes = // TODO: get the number of wins by male athletes
+        var numberEventsWonByFemaleAthletes = this.goldMedalRepository.countByGender("Woman");
+        var numberEventsWonByMaleAthletes = this.goldMedalRepository.countByGender("Man");
 
         return new CountryDetailsResponse(
                 countryName,

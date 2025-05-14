@@ -32,4 +32,8 @@ public interface GoldMedalRepository extends CrudRepository<GoldMedal, Integer> 
 
     // SELECT COUNT(*) FROM gold_medal WHERE season = 'Summer';
     Integer countBySeason(String summer);
+
+    // SELECT COUNT(*) FROM gold_medal WHERE gender = 'Woman';
+    Integer countByGender(String woman);
+
 }
