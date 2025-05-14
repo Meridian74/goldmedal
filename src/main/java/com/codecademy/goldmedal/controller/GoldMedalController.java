@@ -25,9 +25,9 @@ public class GoldMedalController {
 
 
     @GetMapping
-    public CountriesResponse getCountries(@RequestParam String sort_by, @RequestParam String ascending) {
+    public CountriesResponse getCountries(@RequestParam("sort_by") String sortBy, @RequestParam String ascending) {
         var ascendingOrder = ascending.equalsIgnoreCase("y");
-        return new CountriesResponse(getCountrySummaries(sort_by.toLowerCase(), ascendingOrder));
+        return new CountriesResponse(getCountrySummaries(sortBy.toLowerCase(), ascendingOrder));
     }
 
     @GetMapping("/{country}")
@@ -37,10 +37,10 @@ public class GoldMedalController {
     }
 
     @GetMapping("/{country}/medals")
-    public CountryMedalsListResponse getCountryMedalsList(@PathVariable String country, @RequestParam String sort_by, @RequestParam String ascending) {
+    public CountryMedalsListResponse getCountryMedalsList(@PathVariable String country, @RequestParam("sort_by") String sortBy, @RequestParam String ascending) {
         String countryName = WordUtils.capitalizeFully(country);
         var ascendingOrder = ascending.equalsIgnoreCase("y");
-        return getCountryMedalsListResponse(countryName, sort_by.toLowerCase(), ascendingOrder);
+        return getCountryMedalsListResponse(countryName, sortBy.toLowerCase(), ascendingOrder);
     }
 
     private CountryMedalsListResponse getCountryMedalsListResponse(String countryName, String sortBy, boolean ascendingOrder) {
