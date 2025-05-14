@@ -39,7 +39,7 @@ public class GoldMedalController {
     @GetMapping("/{country}/medals")
     public CountryMedalsListResponse getCountryMedalsList(@PathVariable String country, @RequestParam String sort_by, @RequestParam String ascending) {
         String countryName = WordUtils.capitalizeFully(country);
-        var ascendingOrder = ascending.toLowerCase().equals("y");
+        var ascendingOrder = ascending.equalsIgnoreCase("y");
         return getCountryMedalsListResponse(countryName, sort_by.toLowerCase(), ascendingOrder);
     }
 
@@ -52,16 +52,24 @@ public class GoldMedalController {
                         this.goldMedalRepository.getByCountryOrderByYearDesc(countryName);
                 break;
             case "season":
-                medalsList = // TODO: list of medals sorted by season in the given order
+                medalsList = ascendingOrder ?
+                        this.goldMedalRepository.getByCountryOrderBySeasonAsc(countryName) :
+                        this.goldMedalRepository.getByCountryOrderBySeasonDesc(countryName);
                 break;
             case "city":
-                medalsList = // TODO: list of medals sorted by city in the given order
+                medalsList = ascendingOrder ?
+                        this.goldMedalRepository.getByCountryOrderByCityAsc(countryName) :
+                        this.goldMedalRepository.getByCountryOrderByCityDesc(countryName);
                 break;
             case "name":
-                medalsList = // TODO: list of medals sorted by athlete's name in the given order
+                medalsList = ascendingOrder ?
+                        this.goldMedalRepository.getByCountryOrderByNameAsc(countryName) :
+                        this.goldMedalRepository.getByCountryOrderByNameDesc(countryName);
                 break;
             case "event":
-                medalsList = // TODO: list of medals sorted by event in the given order
+                medalsList = ascendingOrder ?
+                        this.goldMedalRepository.getByCountryOrderByEventAsc(countryName) :
+                        this.goldMedalRepository.getByCountryOrderByEventDesc(countryName);
                 break;
             default:
                 medalsList = new ArrayList<>();
