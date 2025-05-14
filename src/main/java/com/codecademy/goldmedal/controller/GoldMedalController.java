@@ -80,21 +80,22 @@ public class GoldMedalController {
     }
 
     private CountryDetailsResponse getCountryDetailsResponse(String countryName) {
-        var countryOptional = // TODO: get the country; this repository method should return a java.util.Optional
+        var countryOptional = this.countryRepository.getByName(countryName);
         if (countryOptional.isEmpty()) {
             return new CountryDetailsResponse(countryName);
         }
 
         var country = countryOptional.get();
-        var goldMedalCount = // TODO: get the medal count
+        var goldMedalCount = this.goldMedalRepository.countByCountry(countryName);
 
-        var summerWins = // TODO: get the collection of wins at the Summer Olympics, sorted by year in ascending order
+        var summerWins = this.goldMedalRepository.getBySeasonOrderByYearAsc("Summer");
+
         var numberSummerWins = summerWins.size() > 0 ? summerWins.size() : null;
-        var totalSummerEvents = // TODO: get the total number of events at the Summer Olympics
+        var totalSummerEvents = this.goldMedalRepository.countBySeason("Summer");
         var percentageTotalSummerWins = totalSummerEvents != 0 && numberSummerWins != null ? (float) summerWins.size() / totalSummerEvents : null;
         var yearFirstSummerWin = summerWins.size() > 0 ? summerWins.get(0).getYear() : null;
 
-        var winterWins = // TODO: get the collection of wins at the Winter Olympics
+        var winterWins = this.goldMedalRepository.getBySeasonOrderByYearAsc("Winter");
         var numberWinterWins = winterWins.size() > 0 ? winterWins.size() : null;
         var totalWinterEvents = // TODO: get the total number of events at the Winter Olympics, sorted by year in ascending order
         var percentageTotalWinterWins = totalWinterEvents != 0 && numberWinterWins != null ? (float) winterWins.size() / totalWinterEvents : null;

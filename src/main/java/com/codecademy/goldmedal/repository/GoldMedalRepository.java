@@ -9,7 +9,10 @@ import java.util.List;
 
 @Repository
 public interface GoldMedalRepository extends CrudRepository<GoldMedal, Integer> {
+
+    // SELECT * FROM gold_medal WHERE country = ? ORDER BY year ASC;
     List<GoldMedal> getByCountryOrderByYearAsc(String countryName);
+
     List<GoldMedal> getByCountryOrderByYearDesc(String countryName);
     List<GoldMedal> getByCountryOrderBySeasonAsc(String countryName);
     List<GoldMedal> getByCountryOrderBySeasonDesc(String countryName);
@@ -20,4 +23,13 @@ public interface GoldMedalRepository extends CrudRepository<GoldMedal, Integer> 
     List<GoldMedal> getByCountryOrderByEventAsc(String countryName);
     List<GoldMedal> getByCountryOrderByEventDesc(String countryName);
 
+
+    // SELECT COUNT(*) FROM gold_medal WHERE country = ?;
+    Integer countByCountry(String countryName);
+
+    // SELECT * FROM gold_medal WHERE season = ? ORDER BY year ASC;
+    List<GoldMedal> getBySeasonOrderByYearAsc(String summer);
+
+    // SELECT COUNT(*) FROM gold_medal WHERE season = 'Summer';
+    Integer countBySeason(String summer);
 }
